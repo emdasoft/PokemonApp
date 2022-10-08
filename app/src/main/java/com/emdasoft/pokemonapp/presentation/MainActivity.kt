@@ -20,10 +20,10 @@ class MainActivity : AppCompatActivity(), PokemonListAdapter.Listener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel = ViewModelProvider(this)[PokemonListViewModel::class.java]
-        initUI()
+        init()
     }
 
-    private fun initUI() {
+    private fun init() {
         binding.pokemonListRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.pokemonListRecyclerView.adapter = PokemonListAdapter(this)
 
@@ -41,5 +41,7 @@ class MainActivity : AppCompatActivity(), PokemonListAdapter.Listener {
 
     override fun onClick(pokemon: PokeResult) {
         Toast.makeText(this, "This is ${pokemon.name}", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, PokemonInfo::class.java)
+        startActivity(intent)
     }
 }
