@@ -9,10 +9,10 @@ import com.emdasoft.pokemonapp.R
 import com.emdasoft.pokemonapp.databinding.ListItemBinding
 import com.emdasoft.pokemonapp.domain.model.PokeResult
 
-class PokemonListAdapter(val pokemonClick: (Int) -> Unit) :
+class PokemonListAdapter(private val listener: Listener) :
     RecyclerView.Adapter<PokemonListAdapter.SearchViewHolder>() {
 
-    var pokemonList: List<PokeResult> = emptyList<PokeResult>()
+    private var pokemonList: List<PokeResult> = emptyList()
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<PokeResult>) {
@@ -22,9 +22,12 @@ class PokemonListAdapter(val pokemonClick: (Int) -> Unit) :
 
     class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ListItemBinding.bind(itemView)
-        fun bind(pokemon: PokeResult) = with(binding) {
+        fun bind(pokemon: PokeResult, listener: Listener) = with(binding) {
             pokemonName.text = buildString {
                 append(pokemon.name)
+            }
+            itemView.setOnClickListener {
+                listener.onClick(pokemon)
             }
         }
     }
@@ -35,12 +38,15 @@ class PokemonListAdapter(val pokemonClick: (Int) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.bind(pokemonList[position])
-
-//        holder.itemView.setOnClickListener { pokemonClick(position + 1) }
+        holder.bind(pokemonList[position], listener)
     }
 
     override fun getItemCount(): Int {
         return pokemonList.size
     }
+
+    interface Listener {
+        fun onClick(pokemon: PokeResult)
+    }
+
 }

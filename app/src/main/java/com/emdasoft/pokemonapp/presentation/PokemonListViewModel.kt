@@ -12,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class PokemonListViewModel() : ViewModel() {
+
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://pokeapi.co/api/v2/")
         .addConverterFactory(GsonConverterFactory.create())
@@ -29,7 +30,6 @@ class PokemonListViewModel() : ViewModel() {
                 response.body()?.results?.let { list ->
                     pokemonList.postValue(list)
                 }
-
             }
 
             override fun onFailure(call: Call<PokeApiResponse>, t: Throwable) {
