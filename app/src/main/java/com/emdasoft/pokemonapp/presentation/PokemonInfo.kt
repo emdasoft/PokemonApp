@@ -1,6 +1,7 @@
 package com.emdasoft.pokemonapp.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -32,14 +33,21 @@ class PokemonInfo : AppCompatActivity() {
         viewModel.pokemonInfo.observe(this) { pokemon ->
             binding.nameTextView.text = pokemon.name
             binding.heightText.text = buildString {
-                append("Height:")
+                append("Height: ")
                 append(pokemon.height * 10.0)
-                append("cm")
+                append(" cm")
             }
             binding.weightText.text = buildString {
-                append("Weight:")
+                append("Weight: ")
                 append(pokemon.weight / 10.0)
-                append("kg")
+                append(" kg")
+            }
+            binding.typesText.text = buildString {
+                append("Types: ")
+                pokemon.types.forEach { it ->
+                    append(it.types.name)
+                    append(" ")
+                }
             }
 
             Glide.with(this).load(pokemon.sprites.frontDefault).into(binding.imageView)
