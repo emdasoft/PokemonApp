@@ -64,13 +64,11 @@ dependencies {
 
     //recycler view support
     implementation "androidx.recyclerview:recyclerview:1.2.1"
-    // For control over item selection of both touch and mouse driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
 
     //pagination
     implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
     implementation "androidx.paging:paging-rxjava2-ktx:3.1.1"
-
 
     //implementation "io.reactivex.rxjava2:rxjava:2.2.20"
     //implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
@@ -80,10 +78,6 @@ dependencies {
     //implementation 'com.squareup.okhttp3:okhttp:4.7.2'
     //implementation "com.squareup.okhttp3:okhttp-urlconnection:3.14.9"
     //implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
-
-    //glide
-    //implementation 'com.github.bumptech.glide:glide:4.11.0'
-    //annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     //dagger hilt
     //implementation 'com.google.dagger:hilt-android:2.33-beta'
