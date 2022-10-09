@@ -1,7 +1,7 @@
-package com.emdasoft.pokemonapp.domain
+package com.emdasoft.pokemonapp.data
 
-import com.emdasoft.pokemonapp.domain.model.PokeApiResponse
-import com.emdasoft.pokemonapp.domain.model.Pokemon
+import com.emdasoft.pokemonapp.api.model.PokeApiResponse
+import com.emdasoft.pokemonapp.api.model.Pokemon
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

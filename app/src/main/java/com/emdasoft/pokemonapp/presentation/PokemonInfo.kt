@@ -50,7 +50,7 @@ class PokemonInfo : AppCompatActivity() {
             }
             binding.typesText.text = buildString {
                 append("Types: ")
-                pokemon.types.forEach { it ->
+                pokemon.types.forEach {
                     append(it.types.name)
                     append(" ")
                 }
