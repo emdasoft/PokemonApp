@@ -1,11 +1,17 @@
 package com.emdasoft.pokemonapp.presentation
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.emdasoft.pokemonapp.R
 import com.emdasoft.pokemonapp.databinding.ActivityPokemonInfoBinding
 
 class PokemonInfo : AppCompatActivity() {
@@ -25,7 +31,7 @@ class PokemonInfo : AppCompatActivity() {
     }
 
     private fun init() {
-
+        checkConnection()
         val id = intent.getIntExtra("id", -1)
 
         viewModel.getPokemonInfo(id)
@@ -59,6 +65,27 @@ class PokemonInfo : AppCompatActivity() {
             android.R.id.home -> finish()
         }
         return true
+    }
+
+    private fun checkConnection() {
+        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnectedOrConnecting == true
+
+        if (!isConnected) {
+            Toast.makeText(this, getString(R.string.error_connection), Toast.LENGTH_SHORT).show()
+            binding.detailsCard.visibility = View.GONE
+            binding.textViewError.visibility = View.VISIBLE
+            binding.tryButton.visibility = View.VISIBLE
+            binding.textViewError.text = getString(R.string.error_connection)
+            binding.tryButton.setOnClickListener {
+                init()
+            }
+        } else {
+            binding.detailsCard.visibility = View.VISIBLE
+            binding.textViewError.visibility = View.GONE
+            binding.tryButton.visibility = View.GONE
+        }
     }
 
 }
