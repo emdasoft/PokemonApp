@@ -24,7 +24,7 @@ Functionality at that moment:
 ● Check Internet Connerction.
 
 ![1_1](https://user-images.githubusercontent.com/93913575/194752565-7b349108-4a88-444e-8468-1038b80f611e.png)
-![2-2](https://user-images.githubusercontent.com/93913575/194752567-ddbc3fac-b48a-483c-9917-a74680140b3c.png)
+![1-1](https://user-images.githubusercontent.com/93913575/194932634-7ca5706f-ebf5-483f-a29b-2a8a56556c23.png)
 ![3-1](https://user-images.githubusercontent.com/93913575/194752569-f0f8897b-8d3b-4e3f-a6ff-5758abec95c3.png)
 
 [Untitled.webm](https://user-images.githubusercontent.com/93913575/194752875-087fb103-2ecb-46af-8d4d-c2af495feaaf.webm)
