@@ -16,7 +16,7 @@ Functionality at that moment:
         
         ○ The Pokemon's weight in kg
         
-        ○ The Pokemon's "types" e.g. grass
+        ○ The Pokemon's "types" (Chips)
         
         ○ Page has back button to go back to the Pokemon's list
         
