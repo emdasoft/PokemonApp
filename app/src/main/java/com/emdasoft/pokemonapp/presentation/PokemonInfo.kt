@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.emdasoft.pokemonapp.R
 import com.emdasoft.pokemonapp.databinding.ActivityPokemonInfoBinding
+import com.google.android.material.chip.Chip
 
 class PokemonInfo : AppCompatActivity() {
 
@@ -48,12 +49,12 @@ class PokemonInfo : AppCompatActivity() {
                 append(pokemon.weight / 10.0)
                 append(" kg")
             }
-            binding.typesText.text = buildString {
-                append("Types: ")
-                pokemon.types.forEach {
-                    append(it.types.name)
-                    append(" ")
-                }
+            pokemon.types.forEach { it ->
+                val chip = Chip(binding.chipGroup.context)
+                chip.text= it.types.name
+                chip.isClickable = false
+                chip.isCheckable = false
+                binding.chipGroup.addView(chip)
             }
 
             Glide.with(this).load(pokemon.sprites.frontDefault).into(binding.imageView)
