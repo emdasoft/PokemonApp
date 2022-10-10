@@ -2,8 +2,8 @@ package com.emdasoft.pokemonapp.presentation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.emdasoft.pokemonapp.domain.PokemonApiService
-import com.emdasoft.pokemonapp.domain.model.Pokemon
+import com.emdasoft.pokemonapp.api.model.Pokemon
+import com.emdasoft.pokemonapp.data.PokemonApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

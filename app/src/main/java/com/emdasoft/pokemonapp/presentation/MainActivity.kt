@@ -65,10 +65,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-//    override fun onClick(pokemon: PokeResult) {
-//        Toast.makeText(this, "This is ${pokemon.name}", Toast.LENGTH_SHORT).show()
-//        val intent = Intent(this, PokemonInfo::class.java)
-//        startActivity(intent)
-//    }
 }

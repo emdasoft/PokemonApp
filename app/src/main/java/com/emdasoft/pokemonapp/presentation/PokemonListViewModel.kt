@@ -2,16 +2,16 @@ package com.emdasoft.pokemonapp.presentation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.emdasoft.pokemonapp.domain.PokemonApiService
-import com.emdasoft.pokemonapp.domain.model.PokeApiResponse
-import com.emdasoft.pokemonapp.domain.model.PokeResult
+import com.emdasoft.pokemonapp.api.model.PokeApiResponse
+import com.emdasoft.pokemonapp.api.model.PokeResult
+import com.emdasoft.pokemonapp.data.PokemonApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class PokemonListViewModel() : ViewModel() {
+class PokemonListViewModel : ViewModel() {
 
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://pokeapi.co/api/v2/")

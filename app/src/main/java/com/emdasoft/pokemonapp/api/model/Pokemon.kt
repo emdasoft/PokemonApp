@@ -1,4 +1,4 @@
-package com.emdasoft.pokemonapp.domain.model
+package com.emdasoft.pokemonapp.api.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
