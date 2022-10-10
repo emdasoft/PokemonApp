@@ -2,4 +2,5 @@
     <string name="app_name">PokemonApp</string>
     <string name="try_again">Try Again</string>
     <string name="error_connection">No Internet Connection</string>
+    <string name="types">Types: </string>
 </resources>
