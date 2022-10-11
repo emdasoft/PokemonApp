@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -49,11 +48,13 @@ class PokemonInfo : AppCompatActivity() {
                 append(pokemon.weight / 10.0)
                 append(" kg")
             }
-            pokemon.types.forEach { it ->
+            pokemon.types.forEach {
                 val chip = Chip(binding.chipGroup.context)
-                chip.text= it.types.name
-                chip.isClickable = false
-                chip.isCheckable = false
+                chip.apply {
+                    text= it.types.name
+                    isClickable = false
+                    isCheckable = false
+                }
                 binding.chipGroup.addView(chip)
             }
 

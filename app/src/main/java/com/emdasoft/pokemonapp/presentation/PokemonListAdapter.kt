@@ -14,8 +14,11 @@ class PokemonListAdapter(val pokemonClick: (Int) -> Unit) :
 
     private var pokemonList: List<PokeResult> = emptyList()
 
-    class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
+    class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(pokemon: PokeResult) {
+            itemView.pokemonName.text = pokemon.name
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
@@ -23,8 +26,9 @@ class PokemonListAdapter(val pokemonClick: (Int) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        val pokemon = pokemonList[position]
-        holder.itemView.pokemonName.text = pokemon.name
+        holder.bind(pokemonList[position])
+//        val pokemon = pokemonList[position]
+//        holder.itemView.pokemonName.text = pokemon.name
         holder.itemView.setOnClickListener { pokemonClick(position + 1) }
     }
 
