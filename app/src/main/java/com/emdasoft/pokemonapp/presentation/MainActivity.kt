@@ -56,9 +56,6 @@ class MainActivity : AppCompatActivity(), PokemonListAdapter.OnItemClick {
         binding.pokemonListRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.pokemonListRecyclerView.adapter = PokemonListAdapter(this)
 
-
-        viewModel.getPokemonList()
-
         viewModel.pokemonList.observe(this) { list ->
             (pokemonListRecyclerView.adapter as PokemonListAdapter).setData(list)
         }

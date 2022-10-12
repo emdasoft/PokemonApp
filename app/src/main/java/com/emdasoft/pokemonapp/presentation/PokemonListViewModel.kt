@@ -4,38 +4,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.emdasoft.pokemonapp.api.model.PokeApiResponse
 import com.emdasoft.pokemonapp.api.model.PokeResult
-import com.emdasoft.pokemonapp.api.PokemonApiService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.emdasoft.pokemonapp.data.RepositoryImpl
+import com.emdasoft.pokemonapp.domain.GetPokemonListUseCase
+
 
 class PokemonListViewModel : ViewModel() {
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://pokeapi.co/api/v2/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    private val repository = RepositoryImpl()
 
-    private val service: PokemonApiService.PokeApiService = retrofit.create(PokemonApiService.PokeApiService::class.java)
+    private val getPokemonListUseCase = GetPokemonListUseCase(repository)
 
-    val pokemonList = MutableLiveData<List<PokeResult>>()
+//    val pokemonList = MutableLiveData<List<PokeResult>>()
+    val pokemonList = getPokemonListUseCase.getPokemonList(200, 0)
 
-    fun getPokemonList(){
-        val call = service.getPokemonList(1154,0)
-
-        call.enqueue(object : Callback<PokeApiResponse>{
-            override fun onResponse(call: Call<PokeApiResponse>, response: Response<PokeApiResponse>) {
-                response.body()?.results?.let { list ->
-                    pokemonList.postValue(list)
-                }
-            }
-
-            override fun onFailure(call: Call<PokeApiResponse>, t: Throwable) {
-                call.cancel()
-            }
-
-        })
-    }
+//    fun getPokemonList(){
+//        getPokemonListUseCase.getPokemonList(1154,0)
+//    }
 }
