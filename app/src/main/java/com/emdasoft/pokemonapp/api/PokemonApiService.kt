@@ -1,4 +1,4 @@
-package com.emdasoft.pokemonapp.data
+package com.emdasoft.pokemonapp.api
 
 import com.emdasoft.pokemonapp.api.model.PokeApiResponse
 import com.emdasoft.pokemonapp.api.model.Pokemon
