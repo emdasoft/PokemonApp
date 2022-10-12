@@ -1,11 +1,13 @@
 package com.emdasoft.pokemonapp.domain
 
+import androidx.lifecycle.LiveData
+import com.emdasoft.pokemonapp.api.model.Pokemon
+
 class GetPokemonDetailsUseCase(private val repository: Repository) {
 
-    fun getPokemonDetails(id: Int) {
+    fun getPokemonDetails(id: Int): Pokemon {
 
-        repository.getPokemonDetails(id)
-
+        return repository.getPokemonDetails(id)
     }
 
 }

@@ -36,29 +36,8 @@ class PokemonInfo : AppCompatActivity() {
 
         viewModel.getPokemonInfo(id)
 
-        viewModel.pokemonInfo.observe(this) { pokemon ->
-            binding.nameTextView.text = pokemon.name
-            binding.heightText.text = buildString {
-                append("Height: ")
-                append(pokemon.height * 10.0)
-                append(" cm")
-            }
-            binding.weightText.text = buildString {
-                append("Weight: ")
-                append(pokemon.weight / 10.0)
-                append(" kg")
-            }
-            pokemon.types.forEach {
-                val chip = Chip(binding.chipGroup.context)
-                chip.apply {
-                    text= it.types.name
-                    isClickable = false
-                    isCheckable = false
-                }
-                binding.chipGroup.addView(chip)
-            }
-
-            Glide.with(this).load(pokemon.sprites.frontDefault).into(binding.imageView)
+        viewModel.pokemonInfo.observe(this) {
+            println(it.toString())
         }
     }
 

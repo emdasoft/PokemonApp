@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.emdasoft.pokemonapp.api.model.PokeApiResponse
 import com.emdasoft.pokemonapp.api.model.PokeResult
+import com.emdasoft.pokemonapp.api.model.Pokemon
 import com.emdasoft.pokemonapp.domain.Repository
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,24 +16,27 @@ class RepositoryImpl : Repository {
 
     private val pokemonListLD = MutableLiveData<List<PokeResult>>()
 
+    private val pokemonInfoLD = MutableLiveData<Pokemon>()
 
-    override fun getPokemonList(limit: Int, offset: Int) : LiveData<List<PokeResult>> {
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("https://pokeapi.co/api/v2/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    private val service: PokemonApiService.PokeApiService =
+        retrofit.create(PokemonApiService.PokeApiService::class.java)
+
+    override fun getPokemonList(limit: Int, offset: Int): LiveData<List<PokeResult>> {
         updateList(limit, offset)
         return pokemonListLD
     }
 
-    override fun getPokemonDetails(id: Int) {
-        TODO("Not yet implemented")
+    override fun getPokemonDetails(id: Int): Pokemon {
+        getInfo(id)
+        return pokemonInfoLD.value
     }
 
     private fun updateList(limit: Int, offset: Int) {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://pokeapi.co/api/v2/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val service: PokemonApiService.PokeApiService =
-            retrofit.create(PokemonApiService.PokeApiService::class.java)
 
         val call = service.getPokemonList(limit, offset)
 
@@ -51,7 +55,23 @@ class RepositoryImpl : Repository {
             }
         })
 
+    }
 
+    private fun getInfo(id: Int) {
+        val call = service.getPokemonInfo(id)
+
+        call.enqueue(object : Callback<Pokemon> {
+            override fun onResponse(call: Call<Pokemon>, response: Response<Pokemon>) {
+                response.body()?.let { pokemon ->
+                    pokemonInfoLD.postValue(pokemon)
+                }
+            }
+
+            override fun onFailure(call: Call<Pokemon>, t: Throwable) {
+                call.cancel()
+            }
+
+        })
     }
 }
 

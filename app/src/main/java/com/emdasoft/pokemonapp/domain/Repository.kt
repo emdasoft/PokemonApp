@@ -6,8 +6,8 @@ import com.emdasoft.pokemonapp.api.model.Pokemon
 
 interface Repository {
 
-    fun getPokemonList(limit: Int, offset: Int) : LiveData<List<PokeResult>>
+    fun getPokemonList(limit: Int, offset: Int): LiveData<List<PokeResult>>
 
-    fun getPokemonDetails(id: Int)
+    fun getPokemonDetails(id: Int): Pokemon
 
 }
