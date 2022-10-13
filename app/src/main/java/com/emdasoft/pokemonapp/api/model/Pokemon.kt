@@ -4,12 +4,12 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class Pokemon(
-    @Expose @SerializedName("id") val id: Int,
-    @Expose @SerializedName("name") val name: String,
-    @Expose @SerializedName("weight") val weight: Int,
-    @Expose @SerializedName("height") val height: Int,
-    @Expose @SerializedName("sprites") val sprites: Sprites,
-    @Expose @SerializedName("types") val types: List<Types>
+    val id: Int,
+    val name: String,
+    val weight: Int,
+    val height: Int,
+    val sprites: Sprites,
+    val types: List<Types>
 )
 
 data class Sprites(

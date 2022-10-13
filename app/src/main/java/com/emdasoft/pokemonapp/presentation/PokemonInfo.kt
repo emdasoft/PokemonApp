@@ -27,7 +27,6 @@ class PokemonInfo : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewModel = ViewModelProvider(this)[PokemonInfoViewModel::class.java]
         init()
-
     }
 
     private fun init() {
@@ -36,8 +35,27 @@ class PokemonInfo : AppCompatActivity() {
 
         viewModel.getPokemonInfo(id)
 
-        viewModel.pokemonInfo.observe(this) {
-            println(it.toString())
+        viewModel.pokemonInfo.observe(this) { pokemon ->
+            binding.nameTextView.text = pokemon.body()?.name
+            binding.heightText.text = buildString {
+                append("Height: ")
+                append(pokemon.body()?.height!! * 10.0)
+                append(" cm")
+            }
+            binding.weightText.text = buildString {
+                append("Weight: ")
+                append(pokemon.body()?.weight!! / 10.0)
+                append(" kg")
+            }
+            pokemon.body()?.types!!.forEach { it ->
+                val chip = Chip(binding.chipGroup.context)
+                chip.text= it.types.name
+                chip.isClickable = false
+                chip.isCheckable = false
+                binding.chipGroup.addView(chip)
+            }
+
+            Glide.with(this).load(pokemon.body()?.sprites!!.frontDefault).into(binding.imageView)
         }
     }
 

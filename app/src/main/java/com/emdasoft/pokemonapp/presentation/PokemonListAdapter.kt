@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.list_item.view.*
 class PokemonListAdapter(private val listener: OnItemClick) :
     RecyclerView.Adapter<PokemonListAdapter.SearchViewHolder>() {
 
-    private var pokemonList = listOf<PokeResult>()
+    private var pokemonList = emptyList<PokeResult>()
 
     class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(pokemon: PokeResult, position: Int, listener: OnItemClick) {

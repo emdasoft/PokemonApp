@@ -53,11 +53,14 @@ class MainActivity : AppCompatActivity(), PokemonListAdapter.OnItemClick {
             }
         })
 
+        viewModel.getPokemonList()
+
         binding.pokemonListRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.pokemonListRecyclerView.adapter = PokemonListAdapter(this)
 
         viewModel.pokemonList.observe(this) { list ->
-            (pokemonListRecyclerView.adapter as PokemonListAdapter).setData(list)
+            list.body()
+                ?.let { (pokemonListRecyclerView.adapter as PokemonListAdapter).setData(it.results) }
         }
 
     }
@@ -73,8 +76,6 @@ class MainActivity : AppCompatActivity(), PokemonListAdapter.OnItemClick {
     private fun loadPokemon() {
 
     }
-
-
 
 
     private fun checkConnection() {

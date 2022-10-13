@@ -1,15 +1,22 @@
 package com.emdasoft.pokemonapp.presentation
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.emdasoft.pokemonapp.data.RepositoryImpl
-import com.emdasoft.pokemonapp.domain.GetPokemonListUseCase
+import androidx.lifecycle.viewModelScope
+import com.emdasoft.pokemonapp.api.model.PokeApiResponse
+import com.emdasoft.pokemonapp.data.Repository
+import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class PokemonListViewModel : ViewModel() {
 
-    private val repository = RepositoryImpl()
+    private val repository = Repository()
 
-    private val getPokemonListUseCase = GetPokemonListUseCase(repository)
+    val pokemonList:  MutableLiveData<Response<PokeApiResponse>> = MutableLiveData()
 
-    val pokemonList = getPokemonListUseCase.getPokemonList(200, 0)
-
+    fun getPokemonList() {
+        viewModelScope.launch {
+            pokemonList.value = repository.getPokemonList(100, 0)
+        }
+    }
 }
