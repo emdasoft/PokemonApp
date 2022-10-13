@@ -1,13 +1,13 @@
 package com.emdasoft.pokemonapp.domain
 
-import androidx.lifecycle.LiveData
 import com.emdasoft.pokemonapp.api.model.Pokemon
+import retrofit2.Response
 
 class GetPokemonDetailsUseCase(private val repository: Repository) {
 
-    fun getPokemonDetails(id: Int): Pokemon {
+    suspend fun getPokemonInfo(id: Int): Response<Pokemon> {
 
-        return repository.getPokemonDetails(id)
+        return repository.getPokemonInfo(id)
     }
 
 }

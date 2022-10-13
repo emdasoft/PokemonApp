@@ -1,13 +1,15 @@
 package com.emdasoft.pokemonapp.domain
 
 import androidx.lifecycle.LiveData
+import com.emdasoft.pokemonapp.api.model.PokeApiResponse
 import com.emdasoft.pokemonapp.api.model.PokeResult
 import com.emdasoft.pokemonapp.api.model.Pokemon
+import retrofit2.Response
 
 interface Repository {
 
-    fun getPokemonList(limit: Int, offset: Int): LiveData<List<PokeResult>>
+    suspend fun getPokemonList(limit: Int, offset: Int): Response<PokeApiResponse>
 
-    fun getPokemonDetails(id: Int): Pokemon
+    suspend fun getPokemonInfo(id: Int): Response<Pokemon>
 
 }

@@ -47,7 +47,7 @@ class PokemonInfo : AppCompatActivity() {
                 append(pokemon.body()?.weight!! / 10.0)
                 append(" kg")
             }
-            pokemon.body()?.types!!.forEach { it ->
+            pokemon.body()?.types!!.forEach {
                 val chip = Chip(binding.chipGroup.context)
                 chip.text= it.types.name
                 chip.isClickable = false

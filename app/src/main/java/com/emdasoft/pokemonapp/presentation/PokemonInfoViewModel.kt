@@ -3,9 +3,8 @@ package com.emdasoft.pokemonapp.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.emdasoft.pokemonapp.api.model.PokeApiResponse
 import com.emdasoft.pokemonapp.api.model.Pokemon
-import com.emdasoft.pokemonapp.data.Repository
+import com.emdasoft.pokemonapp.data.RepositoryImpl
 import com.emdasoft.pokemonapp.domain.GetPokemonDetailsUseCase
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -13,13 +12,15 @@ import retrofit2.Response
 class PokemonInfoViewModel : ViewModel() {
 
 
-    private val repository = Repository()
+    private val repository = RepositoryImpl
+
+    private val getPokemonDetailsUseCase = GetPokemonDetailsUseCase(repository)
 
     val pokemonInfo:  MutableLiveData<Response<Pokemon>> = MutableLiveData()
 
     fun getPokemonInfo(id: Int) {
         viewModelScope.launch {
-            pokemonInfo.value = repository.getPokemonInfo(id)
+            pokemonInfo.value = getPokemonDetailsUseCase.getPokemonInfo(id)
         }
     }
 }
