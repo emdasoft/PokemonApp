@@ -9,7 +9,7 @@ import com.emdasoft.pokemonapp.domain.GetPokemonDetailsUseCase
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class PokemonInfoViewModel : ViewModel() {
+class PokemonInfoViewModel(private val progress: ShowProgress) : ViewModel() {
 
 
     private val repository = RepositoryImpl
@@ -19,9 +19,12 @@ class PokemonInfoViewModel : ViewModel() {
     val pokemonInfo:  MutableLiveData<Response<Pokemon>> = MutableLiveData()
 
     fun getPokemonInfo(id: Int) {
+        progress.showProgress(true)
         viewModelScope.launch {
 //            pokemonInfo.value = getPokemonDetailsUseCase.getPokemonInfo(id)
             pokemonInfo.postValue(getPokemonDetailsUseCase.getPokemonInfo(id))
+            progress.showProgress(false)
         }
     }
+
 }

@@ -8,50 +8,28 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.emdasoft.pokemonapp.R
 import com.emdasoft.pokemonapp.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), PokemonListAdapter.OnItemClick {
+class MainActivity : AppCompatActivity(), PokemonListAdapter.OnItemClick, ShowProgress {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: PokemonListViewModel
-    private lateinit var layoutManager: LinearLayoutManager
-    private var loading = true
-    private var paginate = true
-    private var offset = 0
+//    private lateinit var viewModel: PokemonListViewModel
+    private var viewModel = PokemonListViewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this)[PokemonListViewModel::class.java]
+//        viewModel = ViewModelProvider(this)[PokemonListViewModel::class.java]
         setupRecyclerView()
     }
 
     private fun setupRecyclerView() {
         checkConnection()
         binding.pokemonListRecyclerView.setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(this)
-        binding.pokemonListRecyclerView.addOnScrollListener(object :
-            RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) {
-                    val visibleItemCount = layoutManager.childCount
-                    val totalItemCount = layoutManager.itemCount
-                    val pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
-                    if (loading) {
-                        if (visibleItemCount + pastVisibleItems >= totalItemCount) {
-                            loading = false
-                            paginate()
-                        }
-                    }
-                }
-            }
-        })
 
         viewModel.getPokemonList()
 
@@ -62,21 +40,7 @@ class MainActivity : AppCompatActivity(), PokemonListAdapter.OnItemClick {
             list.body()
                 ?.let { (pokemonListRecyclerView.adapter as PokemonListAdapter).setData(it.results) }
         }
-
     }
-
-    private fun paginate() {
-        if (paginate) {
-            offset += 20
-            loadPokemon()
-            loading = true
-        }
-    }
-
-    private fun loadPokemon() {
-
-    }
-
 
     private fun checkConnection() {
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -103,5 +67,10 @@ class MainActivity : AppCompatActivity(), PokemonListAdapter.OnItemClick {
         val intent = Intent(this, PokemonInfo::class.java)
         intent.putExtra("id", id)
         startActivity(intent)
+    }
+
+    override fun showProgress(enabled: Boolean) {
+        if (enabled) binding.mainProgress.visibility = View.VISIBLE
+        else binding.mainProgress.visibility = View.GONE
     }
 }

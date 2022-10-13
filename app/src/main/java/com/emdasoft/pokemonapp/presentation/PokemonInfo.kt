@@ -8,24 +8,24 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.emdasoft.pokemonapp.R
 import com.emdasoft.pokemonapp.databinding.ActivityPokemonInfoBinding
 import com.google.android.material.chip.Chip
 
-class PokemonInfo : AppCompatActivity() {
+class PokemonInfo : AppCompatActivity(), ShowProgress {
 
     private lateinit var binding: ActivityPokemonInfoBinding
-    private lateinit var viewModel: PokemonInfoViewModel
 
+    //    private lateinit var viewModel: PokemonInfoViewModel
+    private  var viewModel = PokemonInfoViewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPokemonInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        viewModel = ViewModelProvider(this)[PokemonInfoViewModel::class.java]
+//        viewModel = ViewModelProvider(this)[PokemonInfoViewModel::class.java]
         init()
     }
 
@@ -49,7 +49,7 @@ class PokemonInfo : AppCompatActivity() {
             }
             pokemon.body()?.types!!.forEach {
                 val chip = Chip(binding.chipGroup.context)
-                chip.text= it.types.name
+                chip.text = it.types.name
                 chip.isClickable = false
                 chip.isCheckable = false
                 binding.chipGroup.addView(chip)
@@ -85,6 +85,11 @@ class PokemonInfo : AppCompatActivity() {
             binding.textViewError.visibility = View.GONE
             binding.tryButton.visibility = View.GONE
         }
+    }
+
+    override fun showProgress(enabled: Boolean) {
+        if (enabled) binding.infoProgress.visibility = View.VISIBLE
+        else binding.infoProgress.visibility = View.GONE
     }
 
 }
