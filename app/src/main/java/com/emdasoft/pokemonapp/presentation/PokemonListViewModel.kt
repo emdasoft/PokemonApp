@@ -18,7 +18,9 @@ class PokemonListViewModel : ViewModel() {
 
     fun getPokemonList() {
         viewModelScope.launch {
-            pokemonList.value = getPokemonListUseCase.getPokemonList(100, 0)
+//            pokemonList.value = getPokemonListUseCase.getPokemonList(100, 0)
+            pokemonList.postValue(getPokemonListUseCase.getPokemonList(100, 0))
+
         }
     }
 }

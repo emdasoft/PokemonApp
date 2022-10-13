@@ -20,7 +20,8 @@ class PokemonInfoViewModel : ViewModel() {
 
     fun getPokemonInfo(id: Int) {
         viewModelScope.launch {
-            pokemonInfo.value = getPokemonDetailsUseCase.getPokemonInfo(id)
+//            pokemonInfo.value = getPokemonDetailsUseCase.getPokemonInfo(id)
+            pokemonInfo.postValue(getPokemonDetailsUseCase.getPokemonInfo(id))
         }
     }
 }

@@ -4,7 +4,7 @@ package com.emdasoft.pokemonapp.api.model
 //import com.google.gson.annotations.SerializedName
 
 data class PokeApiResponse (
-//    @Expose @SerializedName("count") val count: Int,
+    val count: Int,
     val results: List<PokeResult>
 )
 

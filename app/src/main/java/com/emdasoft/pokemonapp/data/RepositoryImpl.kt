@@ -5,6 +5,7 @@ import com.emdasoft.pokemonapp.api.model.Pokemon
 import retrofit2.Response
 
 object RepositoryImpl : com.emdasoft.pokemonapp.domain.Repository {
+
     override suspend fun getPokemonList(limit: Int, offset: Int): Response<PokeApiResponse> {
 
         return RetrofitInstance.apiService.getPokemonList(limit, offset)
