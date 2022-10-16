@@ -17,6 +17,7 @@
         android:layout_marginBottom="4dp"
         app:cardBackgroundColor="@color/color_for_list"
         app:cardCornerRadius="8dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

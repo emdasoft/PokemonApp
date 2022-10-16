@@ -9,13 +9,19 @@ import com.emdasoft.pokemonapp.R
 import com.emdasoft.pokemonapp.api.model.PokeResult
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class PokemonListAdapter(val pokemonClick: (Int) -> Unit) :
+class PokemonListAdapter(private val listener: OnItemClick) :
     RecyclerView.Adapter<PokemonListAdapter.SearchViewHolder>() {
 
-    private var pokemonList: List<PokeResult> = emptyList()
+    private var pokemonList = emptyList<PokeResult>()
 
-    class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
+    class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(pokemon: PokeResult, position: Int, listener: OnItemClick) {
+            itemView.pokemonName.text = pokemon.name
+            itemView.setOnClickListener {
+                listener.onItemClick(position + 1)
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
@@ -23,9 +29,8 @@ class PokemonListAdapter(val pokemonClick: (Int) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        val pokemon = pokemonList[position]
-        holder.itemView.pokemonName.text = pokemon.name
-        holder.itemView.setOnClickListener { pokemonClick(position + 1) }
+        holder.bind(pokemonList[position], position, listener)
+//        holder.itemView.setOnClickListener { pokemonClick(position + 1) }
     }
 
     override fun getItemCount(): Int {
@@ -36,6 +41,10 @@ class PokemonListAdapter(val pokemonClick: (Int) -> Unit) :
     fun setData(list: List<PokeResult>) {
         pokemonList = list
         notifyDataSetChanged()
+    }
+
+    interface OnItemClick {
+        fun onItemClick(id: Int)
     }
 
 }

@@ -8,40 +8,38 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emdasoft.pokemonapp.R
 import com.emdasoft.pokemonapp.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PokemonListAdapter.OnItemClick, ShowProgress {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: PokemonListViewModel
+//    private lateinit var viewModel: PokemonListViewModel
+    private var viewModel = PokemonListViewModel(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this)[PokemonListViewModel::class.java]
-        init()
+//        viewModel = ViewModelProvider(this)[PokemonListViewModel::class.java]
+        setupRecyclerView()
     }
 
-    private fun init() {
+    private fun setupRecyclerView() {
         checkConnection()
-        binding.pokemonListRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.pokemonListRecyclerView.adapter = PokemonListAdapter {
-            val intent = Intent(this, PokemonInfo::class.java)
-            intent.putExtra("id", it)
-            startActivity(intent)
-        }
+        binding.pokemonListRecyclerView.setHasFixedSize(true)
 
         viewModel.getPokemonList()
 
-        viewModel.pokemonList.observe(this) { list ->
-            (pokemonListRecyclerView.adapter as PokemonListAdapter).setData(list)
-        }
+        binding.pokemonListRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.pokemonListRecyclerView.adapter = PokemonListAdapter(this)
 
+        viewModel.pokemonList.observe(this) { list ->
+            list.body()
+                ?.let { (pokemonListRecyclerView.adapter as PokemonListAdapter).setData(it.results) }
+        }
     }
 
     private fun checkConnection() {
@@ -56,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             binding.tryButton.visibility = View.VISIBLE
             binding.textViewError.text = getString(R.string.error_connection)
             binding.tryButton.setOnClickListener {
-                init()
+                setupRecyclerView()
             }
         } else {
             binding.pokemonListRecyclerView.visibility = View.VISIBLE
@@ -65,4 +63,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onItemClick(id: Int) {
+        val intent = Intent(this, PokemonInfo::class.java)
+        intent.putExtra("id", id)
+        startActivity(intent)
+    }
+
+    override fun showProgress(enabled: Boolean) {
+        if (enabled) binding.mainProgress.visibility = View.VISIBLE
+        else binding.mainProgress.visibility = View.GONE
+    }
 }
