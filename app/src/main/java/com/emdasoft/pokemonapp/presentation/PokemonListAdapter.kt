@@ -1,24 +1,29 @@
 package com.emdasoft.pokemonapp.presentation
 
-import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.emdasoft.pokemonapp.R
 import com.emdasoft.pokemonapp.api.model.PokeResult
 import kotlinx.android.synthetic.main.list_item.view.*
 
 class PokemonListAdapter(private val listener: OnItemClick) :
-    RecyclerView.Adapter<PokemonListAdapter.SearchViewHolder>() {
+    ListAdapter<PokeResult, PokemonListAdapter.SearchViewHolder>(PokemonItemDiffUtilsCallback()) {
 
-    private var pokemonList = emptyList<PokeResult>()
+    private var count = 0
 
     class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(pokemon: PokeResult, position: Int, listener: OnItemClick) {
             itemView.pokemonName.text = pokemon.name
             itemView.setOnClickListener {
                 listener.onItemClick(position + 1)
+            }
+            itemView.setOnLongClickListener {
+                listener.onLongItemClick(position + 1)
+                true
             }
         }
     }
@@ -29,22 +34,14 @@ class PokemonListAdapter(private val listener: OnItemClick) :
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.bind(pokemonList[position], position, listener)
+        Log.d("onBindViewHolder", "${++count}")
+        holder.bind(getItem(position), position, listener)
 //        holder.itemView.setOnClickListener { pokemonClick(position + 1) }
-    }
-
-    override fun getItemCount(): Int {
-        return pokemonList.size
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<PokeResult>) {
-        pokemonList = list
-        notifyDataSetChanged()
     }
 
     interface OnItemClick {
         fun onItemClick(id: Int)
+        fun onLongItemClick(id: Int)
     }
 
 }
